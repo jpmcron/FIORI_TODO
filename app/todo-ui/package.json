@@ -2,16 +2,11 @@
     "name": "todo-ui",
     "version": "0.0.1",
     "private": true,
+    "scripts": {
+        "build": "ui5 build --clean-dest"
+    },
     "devDependencies": {
-        "@sap/ux-specification": "^1.120.0",
-        "@ui5/cli": "^3.0.0"
-    },
-    "ui5": {
-        "dependencies": [
-            "@sap/ux-specification"
-        ]
-    },
-    "sapux": {
-        "minUI5Version": "1.120.0"
+        "@sap/ux-ui5-tooling": "latest",
+        "@ui5/cli": "latest"
     }
 }

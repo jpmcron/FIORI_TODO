@@ -10,7 +10,7 @@
         },
         "dataSources": {
             "TodoService": {
-                "uri": "../../odata/v4/todo/",
+                "uri": "/odata/v4/todo/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -102,5 +102,8 @@
                 }
             }
         }
+    },
+    "sap.cloud": {
+        "service": "com.example.todo"
     }
 }
