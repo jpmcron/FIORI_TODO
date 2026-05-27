@@ -3,14 +3,13 @@ const cds = require('@sap/cds');
 
 const LOG = cds.log('s4-todo');
 
-const DESTINATION  = 'S4H_SD0100_BUILD';
+const DESTINATION  = process.env.S4_DESTINATION || 'S4H_SD0100_BUILD';
 const SERVICE_PATH = '/sap/opu/odata/sap/ydemo_todo_o2_srv';
 const ENTITY_SET   = 'TodoSet';
 
 const COMMON_HEADERS = {
-    'sap-client'  : '100',
-    'Accept'      : 'application/json',
-    'Content-Type': 'application/json'
+    'sap-client': '100',
+    Accept      : 'application/json'
 };
 
 function collectionUrl() {
@@ -33,7 +32,7 @@ async function fetchCsrfToken() {
         { destinationName: DESTINATION },
         {
             method : 'GET',
-            url    : `${SERVICE_PATH}/${ENTITY_SET}?$format=json`,
+            url    : `${SERVICE_PATH}/$metadata`,
             headers: { ...COMMON_HEADERS, 'x-csrf-token': 'Fetch' }
         }
     );
@@ -48,11 +47,7 @@ async function getAllTodos() {
         LOG.info('getAllTodos');
         const res = await executeHttpRequest(
             { destinationName: DESTINATION },
-            {
-                method : 'GET',
-                url    : collectionUrl(),
-                headers: COMMON_HEADERS
-            }
+            { method: 'GET', url: collectionUrl(), headers: COMMON_HEADERS }
         );
         return res.data.d.results;
     } catch (err) {
@@ -65,11 +60,7 @@ async function getTodoById(id) {
         LOG.info(`getTodoById: ${id}`);
         const res = await executeHttpRequest(
             { destinationName: DESTINATION },
-            {
-                method : 'GET',
-                url    : `${entityUrl(id)}?$format=json`,
-                headers: COMMON_HEADERS
-            }
+            { method: 'GET', url: `${entityUrl(id)}?$format=json`, headers: COMMON_HEADERS }
         );
         return res.data.d;
     } catch (err) {
@@ -86,7 +77,12 @@ async function createTodo(data) {
             {
                 method : 'POST',
                 url    : `${SERVICE_PATH}/${ENTITY_SET}`,
-                headers: { ...COMMON_HEADERS, 'x-csrf-token': token, Cookie: cookies },
+                headers: {
+                    ...COMMON_HEADERS,
+                    'Content-Type': 'application/json',
+                    'x-csrf-token': token,
+                    Cookie        : cookies
+                },
                 data
             }
         );
@@ -105,7 +101,12 @@ async function updateTodo(id, data) {
             {
                 method : 'PUT',
                 url    : entityUrl(id),
-                headers: { ...COMMON_HEADERS, 'x-csrf-token': token, Cookie: cookies },
+                headers: {
+                    ...COMMON_HEADERS,
+                    'Content-Type': 'application/json',
+                    'x-csrf-token': token,
+                    Cookie        : cookies
+                },
                 data
             }
         );

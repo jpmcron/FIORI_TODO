@@ -6,17 +6,18 @@
         "@sap-cloud-sdk/connectivity": "^4.7.0",
         "@sap-cloud-sdk/http-client": "^4.7.0",
         "@sap-cloud-sdk/odata-v2": "^4.7.0",
-        "@sap-cloud-sdk/util": "^4.7.0",
         "@sap/cds": "^9",
         "@sap/low-code-event-handler": "^1.2.5",
-        "@sap/xsenv": ">=3.3.2 <3.3.3",
+        "@sap/xsenv": "^3",
         "@sap/xssec": "^4.13.0",
         "hdb": "^2.27.1",
         "passport": "^0.7.0"
     },
     "devDependencies": {
         "@cap-js/sqlite": "^2.4",
-        "@sap/dev-cap-tools": "^1.31.0"
+        "@sap/cds-dk": ">=9.5",
+        "@sap/dev-cap-tools": "^1.31.0",
+        "cds-plugin-ui5": "^0.17.0"
     },
     "scripts": {
         "start": "cds-serve",
@@ -25,6 +26,9 @@
         "cds-watch": "cds watch --open"
     },
     "private": true,
+    "engines": {
+        "node": ">=20"
+    },
     "cds": {
         "requires": {
             "[production]": {
@@ -40,6 +44,5 @@
                 }
             }
         }
-    },
-    "lcap": true
+    }
 }
