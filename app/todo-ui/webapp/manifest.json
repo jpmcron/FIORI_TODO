@@ -1,0 +1,106 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "com.example.todoapplication",
+        "type": "application",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "dataSources": {
+            "TodoService": {
+                "uri": "../../odata/v4/todo/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://task"
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.120.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "": {
+                "dataSource": "TodoService",
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.example.todoapplication.i18n.i18n"
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "TodosList",
+                    "target": "TodosList"
+                },
+                {
+                    "pattern": "Todos({key}):?query:",
+                    "name": "TodosObjectPage",
+                    "target": "TodosObjectPage"
+                }
+            ],
+            "targets": {
+                "TodosList": {
+                    "type": "Component",
+                    "id": "TodosList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Todos",
+                            "variantManagement": "Page",
+                            "initialLoad": "Enabled",
+                            "navigation": {
+                                "Todos": {
+                                    "detail": {
+                                        "route": "TodosObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "TodosObjectPage": {
+                    "type": "Component",
+                    "id": "TodosObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "Todos"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
