@@ -1,6 +1,0 @@
-ID,title,description,status,priority,dueDate,createdAt,createdBy,modifiedAt,modifiedBy
-b2c3d4e5-0001-4000-8000-000000000001,Design database schema,Draft the entity-relationship diagram and review with the team before implementation.,Done,High,2026-05-15,2026-05-10T08:00:00Z,alice@example.com,2026-05-15T17:00:00Z,alice@example.com
-b2c3d4e5-0002-4000-8000-000000000002,Implement OData service,Expose the Todos entity via a CAP OData V4 service with CRUD operations.,In Progress,High,2026-06-05,2026-05-18T09:30:00Z,bob@example.com,2026-05-26T11:00:00Z,bob@example.com
-b2c3d4e5-0003-4000-8000-000000000003,Add input validation,Validate mandatory fields and enforce enum constraints on status and priority at the service layer.,Open,Medium,2026-06-12,2026-05-20T10:00:00Z,carol@example.com,2026-05-20T10:00:00Z,carol@example.com
-b2c3d4e5-0004-4000-8000-000000000004,Configure CI/CD pipeline,Set up GitHub Actions workflow for automated build, test, and deployment to BTP Cloud Foundry.,Open,Low,2026-06-25,2026-05-22T14:00:00Z,bob@example.com,2026-05-22T14:00:00Z,bob@example.com
-b2c3d4e5-0005-4000-8000-000000000005,Deploy to BTP trial,Package and deploy the app to SAP BTP trial environment and run smoke tests.,In Progress,Medium,2026-05-30,2026-05-24T08:00:00Z,alice@example.com,2026-05-27T09:45:00Z,alice@example.com
