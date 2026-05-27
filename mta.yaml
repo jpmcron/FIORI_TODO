@@ -1,0 +1,84 @@
+_schema-version: "3.1"
+ID: todo
+version: 1.0.0
+description: CAP TODO Application — BTP Cloud Foundry deployment
+
+modules:
+
+  # ── CAP Node.js backend ───────────────────────────────────────────────────
+  - name: todo-srv
+    type: nodejs
+    path: .
+    parameters:
+      buildpack: nodejs_buildpack
+      disk-quota: 512M
+      memory: 256M
+    build-parameters:
+      builder: npm
+      ignore:
+        - .env
+        - node_modules/
+        - app/
+        - default-env.json
+    requires:
+      - name: todo-xsuaa
+      - name: todo-destination
+      - name: todo-connectivity
+      - name: todo-db
+      - name: todo-html5-repo-host
+    provides:
+      - name: todo-srv-api
+        properties:
+          srv-url: ${default-url}
+
+  # ── HTML5 app deployer ────────────────────────────────────────────────────
+  - name: todo-ui-deployer
+    type: com.sap.application.content
+    path: app/todo-ui
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+      build-result: webapp
+    requires:
+      - name: todo-html5-repo-host
+        parameters:
+          content-target: true
+
+resources:
+
+  # ── XSUAA ─────────────────────────────────────────────────────────────────
+  - name: todo-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  # ── Destination ───────────────────────────────────────────────────────────
+  - name: todo-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+  # ── Connectivity (On-Premise via SCC) ─────────────────────────────────────
+  - name: todo-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
+  # ── SAP HANA HDI container ────────────────────────────────────────────────
+  - name: todo-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  # ── HTML5 Application Repository ──────────────────────────────────────────
+  - name: todo-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
